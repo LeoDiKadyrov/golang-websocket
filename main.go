@@ -1,5 +1,6 @@
 package main
 
+// WE"RE OFFICIALY IN DEV
 import (
 	"fmt"
 	"log"
