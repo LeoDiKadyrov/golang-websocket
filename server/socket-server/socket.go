@@ -64,5 +64,5 @@ func HandleMessages() {
 
 func GetRoot(w http.ResponseWriter, r *http.Request) {
 	fmt.Printf("got / request\n")
-	http.ServeFile(w, r, "client/index.html")
+	http.ServeFile(w, r, "client/chat.html")
 }

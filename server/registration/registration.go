@@ -1,8 +1,11 @@
 package registration
 
-import "fmt"
+import (
+	"fmt"
+	"net/http"
+)
 
-func Registration(n string) string {
-	fmt.Println("registration is: ", n)
-	return n
+func GetRoot(w http.ResponseWriter, r *http.Request) {
+	fmt.Printf("got / request\n")
+	http.ServeFile(w, r, "client/registration.html")
 }
