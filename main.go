@@ -18,7 +18,7 @@ func main() {
 	http.HandleFunc("/registration", registration.GetRoot)
 
 	go socket.HandleMessages()
-	registration.Registration()
+	// registration.Registration()
 
 	port := "8080"
 	fmt.Printf("Server started on :%s\n", port)
