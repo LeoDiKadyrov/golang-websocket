@@ -7,7 +7,10 @@ import (
 	registrationValidator "websocket_1/server/registration/validation"
 )
 
-// should I connect to db here and do all work here? Or split connection to db into one file and all registration / auth handling to another?
+type UserRegistration struct {
+	Username string `json:"username"`
+	Password string `json:"password"`
+}
 
 func GetRoot(w http.ResponseWriter, r *http.Request) {
 	fmt.Printf("got / request\n")
