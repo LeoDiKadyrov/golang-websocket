@@ -17,7 +17,7 @@ formSubmitButton.addEventListener("click", async (event) => {
     usernameInput.value = "";
     passwordInput.value = "";
 
-    fetch("/registration", {
+    fetch("/register", {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
