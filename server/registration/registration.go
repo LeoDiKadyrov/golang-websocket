@@ -12,7 +12,7 @@ func RegisterUser(username, password string) error {
 
 /* TODO:
 x Handle input values on js
-- Validate them
+x Validate them
 x Send POST request to registration.go
 - Make http server and handler of POST requests here
 - Put DB connection in another file for singleton
@@ -25,4 +25,5 @@ x Database Setup (ORM or GORM) for username + password
 - Logout handler func
 - Protect Websocket Endpoint (check user's JWT before allowing connection)
 - Session management through gorilla/sessions
+- Create models folder with Message model and User model ???
 */

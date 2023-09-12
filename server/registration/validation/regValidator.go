@@ -26,9 +26,25 @@ func RegValidator(w http.ResponseWriter, r *http.Request) {
 	fmt.Println("username in validator.go: ", username)
 	fmt.Println("password in validator.go: ", password)
 
-	err := registration.RegisterUser(username, password)
-	if err != nil {
-		http.Error(w, "Failed to send username + password", http.StatusInternalServerError)
+	// if !isValid(username, password) {
+	// 	http.Error(w, "Invalid input", http.StatusBadRequest)
+	// 	return
+	// }
+
+	// Perform registration
+	if err := registration.RegisterUser(username, password); err != nil {
+		http.Error(w, "Registration failed", http.StatusInternalServerError)
 		return
 	}
+
+	// Registration successful
+	w.WriteHeader(http.StatusCreated)
+	w.Write([]byte("Registration successful"))
 }
+
+// func isValid(username, password string) bool {
+// 	if len(password) > 8 {
+// 		return true
+// 	}
+// 	return false
+// }
