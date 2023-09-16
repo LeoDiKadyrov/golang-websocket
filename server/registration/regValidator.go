@@ -1,13 +1,11 @@
-package regValidator
+package registration
 
 import (
 	"encoding/json"
 	"fmt"
 	"net/http"
-	"unicode"
 	"regexp"
-
-	"websocket_1/server/registration"
+	"unicode"
 )
 
 type UserRegistration struct {
@@ -28,13 +26,13 @@ func RegValidator(w http.ResponseWriter, r *http.Request) {
 	fmt.Println("username in validator.go: ", username)
 	fmt.Println("password in validator.go: ", password)
 
-	if !passwordValidation(password) && !usernameValidation(username) {
+	if !isValidPassword(password) || !isValidUsername(username) {
 		http.Error(w, "Invalid input", http.StatusBadRequest)
 		return
 	}
 
 	// Perform registration
-	if err := registration.RegisterUser(username, password); err != nil {
+	if err := RegisterUser(username, password); err != nil {
 		http.Error(w, "Registration failed", http.StatusInternalServerError)
 		return
 	}
@@ -44,7 +42,7 @@ func RegValidator(w http.ResponseWriter, r *http.Request) {
 	w.Write([]byte("Registration successful"))
 }
 
-func passwordValidation(password string) bool {
+func isValidPassword(password string) bool {
 	letters := 0
 	var number, upper, special, eightOrMore bool
 	for _, char := range password {
@@ -63,7 +61,6 @@ func passwordValidation(password string) bool {
 		}
 	}
 	eightOrMore = letters >= 8
-
 	if number && upper && special && eightOrMore {
 		return true
 	}
@@ -71,11 +68,13 @@ func passwordValidation(password string) bool {
 	return false
 }
 
-func usernameValidation(username string) bool {
+func isValidUsername(username string) bool {
 	var englishLettersPattern = regexp.MustCompile("^[a-zA-Z]+$")
 	var usernameLength = len(username)
 
 	if usernameLength > 8 && usernameLength < 40 && englishLettersPattern.MatchString(username) {
 		return true
-	} else { return false }
+	} else {
+		return false
+	}
 }

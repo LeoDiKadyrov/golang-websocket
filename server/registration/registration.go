@@ -25,4 +25,6 @@ x Database Setup (ORM or GORM) for username + password
 - Protect Websocket Endpoint (check user's JWT before allowing connection)
 - Session management through gorilla/sessions
 - Create models folder with Message model and User model ???
+- Rate Limiting and Brute Force Protection
+- Secure Password Recovery
 */

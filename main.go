@@ -5,8 +5,7 @@ import (
 	"log"
 	"net/http"
 
-	// "websocket_1/server/registration"
-	regValidator "websocket_1/server/registration/validation"
+	"websocket_1/server/registration"
 	"websocket_1/server/socket-server"
 )
 
@@ -16,7 +15,7 @@ func main() {
 
 	http.HandleFunc("/", socket.GetRoot)
 	http.HandleFunc("/ws", socket.WebsocketHandler)
-	http.HandleFunc("/register", regValidator.RegValidator)
+	http.HandleFunc("/register", registration.RegValidator)
 	http.HandleFunc("/registration", func(w http.ResponseWriter, r *http.Request) {
 		http.ServeFile(w, r, "client/registration.html")
 	})
