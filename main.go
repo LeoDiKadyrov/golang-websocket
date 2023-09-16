@@ -15,9 +15,12 @@ func main() {
 
 	http.HandleFunc("/", socket.GetRoot)
 	http.HandleFunc("/ws", socket.WebsocketHandler)
-	go socket.HandleMessages()
+	http.HandleFunc("/register", registration.RegValidator)
+	http.HandleFunc("/registration", func(w http.ResponseWriter, r *http.Request) {
+		http.ServeFile(w, r, "client/registration.html")
+	})
 
-	fmt.Println(registration.Registration("ABDRA SUKA"))
+	go socket.HandleMessages()
 
 	port := "8080"
 	fmt.Printf("Server started on :%s\n", port)
