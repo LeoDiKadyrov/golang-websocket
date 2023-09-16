@@ -7,6 +7,7 @@ import (
 func RegisterUser(username, password string) error {
 	fmt.Println("username in registration.go: ", username)
 	fmt.Println("password in registration.go: ", password)
+	fmt.Println(HashAndSaltPassword("Abdrahman_02"))
 	return nil
 }
 
