@@ -16,7 +16,6 @@ x Validate them
 x Send POST request to registration.go
 - Make http server and handler of POST requests here
 - Put DB connection in another file for singleton
-- Registration.go does only registration handling (should validation be in another file???)
 
 x User Struct
 x Database Setup (ORM or GORM) for username + password

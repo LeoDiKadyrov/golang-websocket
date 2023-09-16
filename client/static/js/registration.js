@@ -14,7 +14,7 @@ formSubmitButton.addEventListener("click", async (event) => {
     UserInput.username = usernameInput.value;
     UserInput.password = passwordInput.value;
 
-    let dataValidated = inputValidation(UserInput.username, UserInput.password);
+    let dataValidated = true
 
     if (dataValidated) {
         fetch("/register", { // TODO: Is there a way to handle it better rather than having /register and /registration ???
@@ -34,14 +34,15 @@ formSubmitButton.addEventListener("click", async (event) => {
                 console.log(message);
             })
             .catch((error) => {
-                console.error("Registration error: ", error);
+                console.error("Registration error: ", error?.message);
             })
+
+            usernameInput.value = "";
+            passwordInput.value = "";
     } else {
-        alert("Vvedi normalno blya")
+        console.log("SUKAAAAAAAAAAAAAA")
     }
 
-    usernameInput.value = "";
-    passwordInput.value = "";
 })
 
 function inputValidation(username, password) {
@@ -68,7 +69,7 @@ function isValidUsername(username) {
 
 function isValidPassword(password) {
     // Check if the password is at least 8 characters long
-    if (password.length < 8) {
+    if (password.length < 8 || password.length > 40) {
         return false;
     }
 
