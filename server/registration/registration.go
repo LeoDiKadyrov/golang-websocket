@@ -2,12 +2,20 @@ package registration
 
 import (
 	"fmt"
+	"log"
+
+	postgresdb "websocket_1/server/database"
 )
 
 func RegisterUser(username, password string) error {
 	fmt.Println("username in registration.go: ", username)
 	fmt.Println("password in registration.go: ", password)
 	fmt.Println(HashAndSaltPassword("Abdrahman_02"))
+
+	_, err := postgresdb.PostgresDB.Exec("INSERT INTO users (username, password_hash) VALUES ($1, $2)", "john", "hashed_password")
+	if err != nil {
+		log.Fatal(err)
+	}
 	return nil
 }
 
