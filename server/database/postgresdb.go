@@ -12,8 +12,7 @@ import (
 var PostgresDB *sql.DB
 
 func Postgresqdb() {
-	defer PostgresDB.Close()
-	dbURI := "user=postgres dbname=gowebsocket sslmode=disable password=abdrahman"
+	dbURI := "user=postgres dbname=gowebsocket sslmode=disable"
 
 	var err error
 	PostgresDB, err = sql.Open("postgres", dbURI)
@@ -26,7 +25,6 @@ func Postgresqdb() {
 	}
 	fmt.Println("Connected to database: ", PostgresDB)
 
-	// Just test inserting - all working but crashes with error: "panic: runtime error: invalid memory address or nil pointer dereference"
 	/*
 			CREATE TABLE users (
 		    	user_id SERIAL PRIMARY KEY,

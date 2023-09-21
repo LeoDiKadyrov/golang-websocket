@@ -10,9 +10,13 @@ import (
 func RegisterUser(username, password string) error {
 	fmt.Println("username in registration.go: ", username)
 	fmt.Println("password in registration.go: ", password)
-	fmt.Println(HashAndSaltPassword("Abdrahman_02"))
 
-	_, err := postgresdb.PostgresDB.Exec("INSERT INTO users (username, password_hash) VALUES ($1, $2)", "john", "hashed_password")
+	hashedFinalPassword, finalSalt, err := HashAndSaltPassword(password)
+	if err != nil {
+		log.Fatal(err)
+	}
+	fmt.Println(hashedFinalPassword)
+	_, err = postgresdb.PostgresDB.Exec("INSERT INTO users (username, password_hash, salt) VALUES ($1, $2, $3)", username, hashedFinalPassword, finalSalt)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -23,8 +27,7 @@ func RegisterUser(username, password string) error {
 x Handle input values on js
 x Validate them
 x Send POST request to registration.go
-- Make http server and handler of POST requests here
-- Put DB connection in another file for singleton
+x Put DB connection in another file for singleton
 
 x User Struct
 x Database Setup (ORM or GORM) for username + password

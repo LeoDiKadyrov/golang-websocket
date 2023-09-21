@@ -7,9 +7,19 @@ import (
 
 	"websocket_1/server/registration"
 	"websocket_1/server/socket-server"
+	"websocket_1/server/database"
 )
 
 func main() {
+	postgresdb.Postgresqdb()
+	defer func() {
+        if err := postgresdb.PostgresDB.Close(); err != nil {
+            log.Println("Error closing database connection:", err)
+        } else {
+            log.Println("Database connection closed.")
+        }
+    }()
+
 	fs := http.FileServer(http.Dir("client/static"))
 	http.Handle("/static/", http.StripPrefix("/static/", fs))
 
