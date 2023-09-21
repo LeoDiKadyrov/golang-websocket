@@ -11,14 +11,13 @@ import (
 )
 
 func main() {
-	postgresdb.Postgresqdb()
-	defer func() {
-        if err := postgresdb.PostgresDB.Close(); err != nil {
-            log.Println("Error closing database connection:", err)
-        } else {
-            log.Println("Database connection closed.")
-        }
-    }()
+	db, err := postgresdb.NewDatabase()
+	if err != nil {
+		log.Fatal(err)
+	}
+	defer db.Close()
+
+	registration.SetDB(db)
 
 	fs := http.FileServer(http.Dir("client/static"))
 	http.Handle("/static/", http.StripPrefix("/static/", fs))
@@ -34,7 +33,7 @@ func main() {
 
 	port := "8080"
 	fmt.Printf("Server started on :%s\n", port)
-	err := http.ListenAndServe(":"+port, nil)
+	err = http.ListenAndServe(":"+port, nil)
 	if err != nil {
 		log.Fatal("ListenAndServe: ", err)
 	}

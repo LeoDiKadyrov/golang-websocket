@@ -2,35 +2,47 @@ package postgresdb
 
 import (
 	"fmt"
-	"log"
-
+	"sync"
 	"database/sql"
 
 	_ "github.com/lib/pq"
 )
 
-var PostgresDB *sql.DB
+type Database struct {
+	db *sql.DB
+}
 
-func Postgresqdb() {
+var (
+	instance *Database
+	once sync.Once
+)
+
+func NewDatabase() (*Database, error) {
 	dbURI := "user=postgres dbname=gowebsocket sslmode=disable"
 
-	var err error
-	PostgresDB, err = sql.Open("postgres", dbURI)
-	if err != nil {
-		log.Fatal(err)
-	}
+	once.Do(func() {
+		db, err := sql.Open("postgres", dbURI)
+		if err != nil {
+			panic(err)
+		}
 
-	if err = PostgresDB.Ping(); err != nil {
-		log.Fatal(err)
-	}
-	fmt.Println("Connected to database: ", PostgresDB)
+		if err = db.Ping(); err != nil {
+			panic(err)
+		}
+		fmt.Println("Connected to database: ", db)
+		instance = &Database{db}
+	})
 
-	/*
-			CREATE TABLE users (
-		    	user_id SERIAL PRIMARY KEY,
-		    	username VARCHAR(255) NOT NULL UNIQUE,
-		    	password_hash BYTEA NOT NULL,
-		    	salt BYTEA NOT NULL
-			);
-	*/
+	return instance, nil
+}
+
+func (d *Database) getDB() *sql.DB {
+	if instance == nil {
+		panic("Database connection is not initialized")
+	}
+	return d.db
+}
+
+func (d *Database) Close() error {
+	return d.db.Close()
 }

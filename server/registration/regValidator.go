@@ -37,7 +37,7 @@ func RegValidator(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	// Registration successful
+	// Registration successful // TODO: PUT THIS INTO REGISTRATION.GO
 	w.WriteHeader(http.StatusCreated)
 	w.Write([]byte("Registration successful"))
 }

@@ -3,9 +3,16 @@ package registration
 import (
 	"fmt"
 	"log"
+	"database/sql"
 
-	postgresdb "websocket_1/server/database"
+	"websocket_1/server/database"
 )
+
+var db *postgresdb.Database
+
+func SetDB (database *postgresdb.Database) {
+	db = database
+}
 
 func RegisterUser(username, password string) error {
 	fmt.Println("username in registration.go: ", username)
@@ -16,7 +23,7 @@ func RegisterUser(username, password string) error {
 		log.Fatal(err)
 	}
 	fmt.Println(hashedFinalPassword)
-	_, err = postgresdb.PostgresDB.Exec("INSERT INTO users (username, password_hash, salt) VALUES ($1, $2, $3)", username, hashedFinalPassword, finalSalt)
+	_, err = db.Exec("INSERT INTO users (username, password_hash, salt) VALUES ($1, $2, $3)", username, hashedFinalPassword, finalSalt)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -24,19 +31,22 @@ func RegisterUser(username, password string) error {
 }
 
 /* TODO:
-x Handle input values on js
-x Validate them
-x Send POST request to registration.go
-x Put DB connection in another file for singleton
-
-x User Struct
-x Database Setup (ORM or GORM) for username + password
-- Registration handler func
+- Send registration successfull message to frontend and show it from javascript to users
+- Redirect to chat main page (right now it's "/")
 - Authentication handler func
+- Forgot password handler
 - Logout handler func
 - Protect Websocket Endpoint (check user's JWT before allowing connection)
 - Session management through gorilla/sessions
 - Create models folder with Message model and User model ???
 - Rate Limiting and Brute Force Protection
 - Secure Password Recovery
+
+x Handle input values on js
+x Validate them
+x Send POST request to registration.go
+x Put DB connection in another file for singleton
+x User Struct
+x Database Setup (ORM or GORM) for username + password
+x Registration handler func
 */
