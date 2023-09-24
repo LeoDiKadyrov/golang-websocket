@@ -5,19 +5,14 @@ import (
 	"log"
 	"net/http"
 
+	postgresdb "websocket_1/server/database"
 	"websocket_1/server/registration"
 	"websocket_1/server/socket-server"
-	"websocket_1/server/database"
 )
 
 func main() {
-	db, err := postgresdb.NewDatabase()
-	if err != nil {
-		log.Fatal(err)
-	}
-	defer db.Close()
-
-	registration.SetDB(db)
+	postgresdb.GetInstanceDB()
+	defer postgresdb.Close()
 
 	fs := http.FileServer(http.Dir("client/static"))
 	http.Handle("/static/", http.StripPrefix("/static/", fs))
@@ -33,7 +28,7 @@ func main() {
 
 	port := "8080"
 	fmt.Printf("Server started on :%s\n", port)
-	err = http.ListenAndServe(":"+port, nil)
+	err := http.ListenAndServe(":"+port, nil)
 	if err != nil {
 		log.Fatal("ListenAndServe: ", err)
 	}

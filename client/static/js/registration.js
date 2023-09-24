@@ -63,7 +63,7 @@ function inputValidation(username, password) {
 
 function isValidUsername(username) {
     // Check if the username contains only English letters
-    if (username.length < 8) {
+    if (username.length <= 4) {
         return false;
     }
     const letters = /^[a-zA-Z]+$/;
