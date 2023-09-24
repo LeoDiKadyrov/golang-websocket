@@ -40,6 +40,8 @@ formSubmitButton.addEventListener("click", async (event) => {
 
             usernameInput.value = "";
             passwordInput.value = "";
+            passwordInput.blur() // unfocus input
+            usernameInput.blur() // unfocus input
     } else {
         alert("There is an error during registration")
     }
