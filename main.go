@@ -5,11 +5,15 @@ import (
 	"log"
 	"net/http"
 
+	postgresdb "websocket_1/server/database"
 	"websocket_1/server/registration"
 	"websocket_1/server/socket-server"
 )
 
 func main() {
+	postgresdb.GetInstanceDB()
+	defer postgresdb.Close()
+
 	fs := http.FileServer(http.Dir("client/static"))
 	http.Handle("/static/", http.StripPrefix("/static/", fs))
 

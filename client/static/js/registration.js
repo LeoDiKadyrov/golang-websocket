@@ -7,14 +7,14 @@ const UserInput = {
     password: ""
 }
 
-const url = 
+//const url = 
 
 formSubmitButton.addEventListener("click", async (event) => {
     event.preventDefault();
     UserInput.username = usernameInput.value;
     UserInput.password = passwordInput.value;
 
-    let dataValidated = true
+    let dataValidated = inputValidation(UserInput.username, UserInput.password)
 
     if (dataValidated) {
         fetch("/register", { // TODO: Is there a way to handle it better rather than having /register and /registration ???
@@ -63,6 +63,9 @@ function inputValidation(username, password) {
 
 function isValidUsername(username) {
     // Check if the username contains only English letters
+    if (username.length <= 4) {
+        return false;
+    }
     const letters = /^[a-zA-Z]+$/;
     return letters.test(username);
 }

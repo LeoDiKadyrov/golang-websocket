@@ -1,35 +1,56 @@
-package postgresqdb
+package postgresdb
 
 import (
 	"fmt"
-	"log"
-
+	"sync"
 	"database/sql"
 
 	_ "github.com/lib/pq"
 )
 
-var db *sql.DB
+var lock = &sync.Mutex{}
 
-func Postgresqdb() {
-	defer db.Close()
-	dbURI := "user=postgres dbname=gowebsocket sslmode=disable password=admin"
+type singletonDB struct {
+	DB *sql.DB
+	err error
+}
 
-	var err error
-	db, err = sql.Open("postgres", dbURI)
-	if err != nil {
-		log.Fatal(err)
+var singleInstanceDB *singletonDB
+
+func (s *singletonDB) NewDatabase() error {
+	dbURI := "user=postgres dbname=gowebsocket sslmode=disable"
+	
+	s.DB, s.err = sql.Open("postgres", dbURI)
+	if s.err != nil {
+		panic(s.err)
 	}
 
-	if err = db.Ping(); err != nil {
-		log.Fatal(err)
+	if s.err = s.DB.Ping(); s.err != nil {
+		panic(s.err)
 	}
-	fmt.Println("Connected to database: ", db)
+	fmt.Println("Connected to database: ", s.DB)
 
-	// Just test inserting - all working but crashes with error: "panic: runtime error: invalid memory address or nil pointer dereference"
+	return nil
+}
 
-	// _, err = db.Exec("INSERT INTO users (username, password_hash) VALUES ($1, $2)", "john", "hashed_password")
-	// if err != nil {
-	// 	log.Fatal(err)
-	// }
+func GetInstanceDB() *singletonDB {
+	if singleInstanceDB == nil {
+		lock.Lock()
+		defer lock.Unlock()
+		if singleInstanceDB == nil {
+			fmt.Println("Creating a single instance of db now")
+			singleInstanceDB = &singletonDB{}
+            singleInstanceDB.NewDatabase()
+		} else {
+			fmt.Println("Single instance has already been created")
+		}
+	} else {
+		fmt.Println("Single instance has already been created")
+	}
+
+	return singleInstanceDB
+}
+
+func Close() error {
+	return singleInstanceDB.DB.Close()
 }
