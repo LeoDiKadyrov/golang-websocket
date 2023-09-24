@@ -1,7 +1,6 @@
 package registration
 
 import (
-	"fmt"
 	"log"
 
 	postgresdb "websocket_1/server/database"
@@ -10,15 +9,14 @@ import (
 func RegisterUser(username, password string) error {
 	db := postgresdb.GetInstanceDB().DB
 
-	fmt.Println("username in registration.go: ", username)
-	fmt.Println("password in registration.go: ", password)
-	fmt.Println("DB: ", db)
+	// fmt.Println("username in registration.go: ", username)
+	// fmt.Println("password in registration.go: ", password)
 
 	hashedFinalPassword, finalSalt, err := HashAndSaltPassword(password)
 	if err != nil {
 		log.Fatal(err)
 	}
-	fmt.Println(hashedFinalPassword)
+	// fmt.Println(hashedFinalPassword)
 	_, err = db.Exec("INSERT INTO users (username, password_hash, salt) VALUES ($1, $2, $3)", username, hashedFinalPassword, finalSalt)
 	if err != nil {
 		log.Fatal(err)
