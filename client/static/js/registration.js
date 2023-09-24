@@ -1,13 +1,13 @@
 const usernameInput = document.getElementsByClassName("registration__login")[0];
 const passwordInput = document.getElementsByClassName("registration__password")[0];
 const formSubmitButton = document.getElementsByClassName("registration__submit")[0];
+const modal = document.getElementsByClassName("registration__modal")[0]
+const span = document.getElementsByClassName("close")[0];
 
 const UserInput = {
     username: "",
     password: ""
 }
-
-//const url = 
 
 formSubmitButton.addEventListener("click", async (event) => {
     event.preventDefault();
@@ -32,6 +32,7 @@ formSubmitButton.addEventListener("click", async (event) => {
             })
             .then((message) => {
                 console.log(message);
+                modal.style.display = "block";
             })
             .catch((error) => {
                 console.error("Registration error: ", error?.message);
@@ -107,4 +108,18 @@ function isValidPassword(password) {
     }
 
     return true;
+}
+
+// When the user clicks on <span> (x), close the modal
+span.onclick = function() {
+  modal.style.display = "none";
+  window.location.replace("/");
+}
+
+// When the user clicks anywhere outside of the modal, close it
+window.onclick = function(event) {
+    if (event.target == modal) {
+        modal.style.display = "none";
+        window.location.replace("/");
+    }
 }
