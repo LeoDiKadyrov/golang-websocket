@@ -8,16 +8,30 @@
 </head>
 <body>
     <div class="container">
+        <div class="registration__welcome">
+            <p class="welcome__text">
+                Welcome to AbdraChat!
+            </p>
+        </div>
         <div class="registration__form">
             <form>
                 <input type="text" class="registration__login" required minlength="2">
                 <input type="password" class="registration__password" required minlength="8">
                 <input class="registration__submit" type="submit">
             </form>
-            <p class="registration__forgot">Forgot Password?</p>
-            <p class="registration__auth">Sign in</p>
+            <p class="registration__forgot"><a href="/">Forgot Password?</a></p>
+            <p class="registration__auth"><a href="/">Sign in</a></p>
         </div>
     </div>
+
+    <div class="registration__abdrahman">
+        <p class="abdrahman__text">This is my friend Abdrahman!</p>
+        <img src="assets/abdraWelcomePicture.jpg" alt="Girl in a jacket" width="500" height="400" class="abdrahman__image">
+    </div>  
+
+    <footer class="footer">
+        <p>&copy; 2023 AbdraChat. All rights reserved.</p>
+    </footer>
 
     <script src="static/js/registration.js"></script>
 </body>

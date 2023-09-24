@@ -40,29 +40,26 @@ formSubmitButton.addEventListener("click", async (event) => {
             usernameInput.value = "";
             passwordInput.value = "";
     } else {
-        console.log("SUKAAAAAAAAAAAAAA")
+        alert("There is an error during registration")
     }
 
 })
 
 function inputValidation(username, password) {
-    // Check if the username is valid
     if (!isValidUsername(username)) {
         alert("Invalid username. Use only English letters.");
         return false;
     }
 
-    // Check if the password is valid
     if (!isValidPassword(password)) {
         alert("Invalid password. Password must be at least 8 characters long, contain at least one uppercase letter, one number, and one special character.");
         return false;
     }
 
-    return true; // Data is valid
+    return true; 
 }
 
 function isValidUsername(username) {
-    // Check if the username contains only English letters
     if (username.length <= 4) {
         return false;
     }
@@ -71,12 +68,10 @@ function isValidUsername(username) {
 }
 
 function isValidPassword(password) {
-    // Check if the password is at least 8 characters long
     if (password.length < 8 || password.length > 40) {
         return false;
     }
 
-    // Check if the password contains at least one uppercase letter
     let hasUpperCase = false;
     for (const char of password) {
         if (char >= 'A' && char <= 'Z') {
@@ -88,7 +83,6 @@ function isValidPassword(password) {
         return false;
     }
 
-    // Check if the password contains at least one number
     let hasNumber = false;
     for (const char of password) {
         if (char >= '0' && char <= '9') {
@@ -100,7 +94,6 @@ function isValidPassword(password) {
         return false;
     }
 
-    // Check if the password contains at least one special character
     const specialCharacters = "!@#$%^&*()_-+=<>?/[]{}|";
     let hasSpecialCharacter = false;
     for (const char of password) {
