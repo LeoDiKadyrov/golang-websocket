@@ -2,7 +2,6 @@ package registration
 
 import (
 	"encoding/json"
-	"fmt"
 	"net/http"
 	"regexp"
 	"unicode"
@@ -22,9 +21,6 @@ func RegValidator(w http.ResponseWriter, r *http.Request) {
 
 	username := request.Username
 	password := request.Password
-
-	fmt.Println("username in validator.go: ", username)
-	fmt.Println("password in validator.go: ", password)
 
 	if !isValidPassword(password) || !isValidUsername(username) {
 		http.Error(w, "Invalid input", http.StatusBadRequest)

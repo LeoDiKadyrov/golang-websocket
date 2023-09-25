@@ -9,14 +9,11 @@ import (
 func RegisterUser(username, password string) error {
 	db := postgresdb.GetInstanceDB().DB
 
-	// fmt.Println("username in registration.go: ", username)
-	// fmt.Println("password in registration.go: ", password)
-
 	hashedFinalPassword, finalSalt, err := HashAndSaltPassword(password)
 	if err != nil {
 		log.Fatal(err)
 	}
-	// fmt.Println(hashedFinalPassword)
+
 	_, err = db.Exec("INSERT INTO users (username, password_hash, salt) VALUES ($1, $2, $3)", username, hashedFinalPassword, finalSalt)
 	if err != nil {
 		log.Fatal(err)
@@ -25,8 +22,8 @@ func RegisterUser(username, password string) error {
 }
 
 /* TODO:
-- Send registration successfull message to frontend and show it from javascript to users
-- Redirect to chat main page (right now it's "/")
+x Send registration successfull message to frontend and show it from javascript to users
+x Redirect to chat main page (right now it's "/")
 - Authentication handler func
 - Forgot password handler
 - Logout handler func
