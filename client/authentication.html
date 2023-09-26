@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="static/css/authentication.css">
-    <title>Document</title>
+    <title>AbdraChat</title>
 </head>
 <body>
     <div class="container">
@@ -20,8 +20,8 @@
 
             <input type="submit" value="Login" class="authentication__submit">
 
-            <p class="authentication__forgot"><a href="/">Forgot Password?</a></p>
-            <p class="authentication__register"><a href="/">Sign up</a></p>
+            <p class="authentication__forgot"><a href="/recovery">Forgot Password?</a></p>
+            <p class="authentication__register"><a href="/registration">Sign up</a></p>
         </form>
 
         <!-- Modals for success and failure -->
@@ -33,6 +33,10 @@
             <p class="modal__content">Authentication failed. Please check your credentials.</p>
         </div>
     </div>
+
+    <footer class="footer">
+        <p>&copy; 2023 AbdraChat. All rights reserved.</p>
+    </footer>
 
     <script src="static/js/authentication.js"></script>
 </body>

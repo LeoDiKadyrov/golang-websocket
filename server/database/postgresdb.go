@@ -1,9 +1,9 @@
 package postgresdb
 
 import (
+	"database/sql"
 	"fmt"
 	"sync"
-	"database/sql"
 
 	_ "github.com/lib/pq"
 )
@@ -11,7 +11,7 @@ import (
 var lock = &sync.Mutex{}
 
 type singletonDB struct {
-	DB *sql.DB
+	DB  *sql.DB
 	err error
 }
 
@@ -19,7 +19,7 @@ var singleInstanceDB *singletonDB
 
 func (s *singletonDB) NewDatabase() error {
 	dbURI := "user=postgres dbname=gowebsocket sslmode=disable"
-	
+
 	s.DB, s.err = sql.Open("postgres", dbURI)
 	if s.err != nil {
 		panic(s.err)
@@ -40,7 +40,7 @@ func GetInstanceDB() *singletonDB {
 		if singleInstanceDB == nil {
 			fmt.Println("Creating a single instance of db now")
 			singleInstanceDB = &singletonDB{}
-            singleInstanceDB.NewDatabase()
+			singleInstanceDB.NewDatabase()
 		} else {
 			fmt.Println("Single instance has already been created")
 		}

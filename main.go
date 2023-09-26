@@ -23,6 +23,12 @@ func main() {
 	http.HandleFunc("/registration", func(w http.ResponseWriter, r *http.Request) {
 		http.ServeFile(w, r, "client/registration.html")
 	})
+	http.HandleFunc("/authentication", func(w http.ResponseWriter, r *http.Request) {
+		http.ServeFile(w, r, "client/authentication.html")
+	})
+	http.HandleFunc("/recovery", func(w http.ResponseWriter, r *http.Request) {
+		http.ServeFile(w, r, "client/recoverPassword.html")
+	})
 
 	go socket.HandleMessages()
 
