@@ -1,1 +1,1 @@
-alert("authentication motherfucker")
+console.log("authentication motherfucker")

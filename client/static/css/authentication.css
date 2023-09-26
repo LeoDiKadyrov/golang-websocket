@@ -1,3 +1,153 @@
+/* Reset some default styles (similar to registration.css) */
+body, html {
+    margin: 0;
+    padding: 0;
+}
+
+/* Adjust body styles (similar to registration.css) */
 body {
-    background-color: #333;
+    font-family: Arial, sans-serif;
+    background-color: #212121; /* Dark background color */
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Center content horizontally */
+    justify-content: center; /* Center content vertically */
+    height: 100vh;
+}
+
+/* Keep your container styles (similar to registration.css) */
+.container {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 20px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Style the welcome message (similar to registration.css) */
+.authentication__welcome {
+    text-align: center;
+    margin-bottom: 20px; /* Add some spacing below the welcome message */
+}
+
+.welcome__text {
+    font-size: 24px;
+    color: #fff; /* Adjust text color */
+}
+
+/* Style the authentication form (similar to registration.css) */
+.authentication__form {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+/* Style the form inputs (similar to registration.css) */
+.authentication__login,
+.authentication__password {
+    width: calc(100% - 22px);
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    font-size: 16px;
+    box-sizing: border-box;
+}
+
+/* Style the submit button (similar to registration.css) */
+.authentication__submit {
+    background-color: #337ab7;
+    color: #fff;
+    border: none;
+    border-radius: 3px;
+    padding: 10px 20px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s;
+}
+
+.authentication__submit:hover {
+    background-color: #286090;
+}
+
+/* Style the "Forgot Password?" and "Sign in" links (similar to registration.css) */
+.authentication__forgot,
+.authentication__register {
+    text-decoration: none;
+    color: #337ab7;
+    font-size: 14px;
+    margin-top: 10px;
+    display: block;
+}
+
+.authentication__register:hover {
+    color: #286090;
+}
+
+/* Style the new Abdrahman section (similar to registration.css)
+.authentication__abdrahman {
+    background-color: #fff;
+    padding-left: 20px;
+    padding-right: 20px;
+    border-radius: 5px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+.abdrahman__text {
+    font-size: 18px;
+    color: #333; 
+}
+
+.abdrahman__image {
+    max-width: 100%;
+    margin-bottom: 20px;
+} */
+
+/* Style the footer (unchanged) */
+.footer {
+    color: #fff;
+    padding: 10px 0;
+    text-align: center;
+}
+
+/* The Modal (background) (similar to registration.css) */
+.authentication__modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+/* Modal Content/Box (similar to registration.css) */
+.modal__content {
+    background-color: #fefefe;
+    margin: 15% auto; /* 15% from the top and centered */
+    padding: 20px;
+    border: 1px solid #888;
+    width: 20%; /* Could be more or less, depending on screen size */
+}
+
+/* The Close Button (similar to registration.css) */
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
 }
