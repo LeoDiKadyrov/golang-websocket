@@ -5,6 +5,7 @@ import (
 	"log"
 	"net/http"
 
+	"websocket_1/server/authentication"
 	postgresdb "websocket_1/server/database"
 	"websocket_1/server/registration"
 	"websocket_1/server/socket-server"
@@ -20,6 +21,7 @@ func main() {
 	http.HandleFunc("/", socket.GetRoot)
 	http.HandleFunc("/ws", socket.WebsocketHandler)
 	http.HandleFunc("/register", registration.RegValidator)
+	http.HandleFunc("/authenticate", authentication.AuthValidator)
 	http.HandleFunc("/registration", func(w http.ResponseWriter, r *http.Request) {
 		http.ServeFile(w, r, "client/registration.html")
 	})

@@ -9,7 +9,7 @@ import (
 	"websocket_1/server/validation"
 )
 
-func authValidator(w http.ResponseWriter, r *http.Request) {
+func AuthValidator(w http.ResponseWriter, r *http.Request) {
 	fmt.Println("I'm an auth validator")
 
 	var request models.User

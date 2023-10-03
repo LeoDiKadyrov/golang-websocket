@@ -21,7 +21,7 @@ func AuthenticateUser(username, password string) error {
 		log.Fatal(err)
 	}
 
-	stmt, err := db.Prepare("SELECT username, password_hash, salt FROM users WHERE username = ?;")
+	stmt, err := db.Prepare("SELECT username, password_hash, salt FROM users WHERE username = '?';")
 	if err != nil {
 		log.Fatal(err)
 	}
