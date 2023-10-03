@@ -26,10 +26,13 @@
 
         <!-- Modals for success and failure -->
         <div id="successModal" style="display: none;" class="authentication__modal">
-            <p class="modal__content">Authentication successful!</p>
+                <span class="close">&times;</span>
+                <p class="modal__content">Registration Successful</p>
+                <i class="fa-solid fa-check fa-2xl" style="color: #0ce910;"></i>
         </div>
 
         <div id="failureModal" style="display: none;" class="authentication__modal">
+            <span class="close">&times;</span>
             <p class="modal__content">Authentication failed. Please check your credentials.</p>
         </div>
     </div>
@@ -38,7 +41,7 @@
         <p>&copy; 2023 AbdraChat. All rights reserved.</p>
     </footer>
 
-    <script src="static/js/authentication.js"></script>
+    <script type="module" src="static/js/authentication.js"></script>
 </body>
 </html>
 
