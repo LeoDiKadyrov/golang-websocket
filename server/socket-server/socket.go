@@ -6,6 +6,8 @@ import (
 	"log"
 	"net/http"
 
+	"websocket_1/server/models"
+
 	"github.com/gorilla/websocket"
 )
 
@@ -18,12 +20,7 @@ var upgrader = websocket.Upgrader{
 }
 
 var clients = make(map[*websocket.Conn]bool)
-var broadcast = make(chan Message)
-
-type Message struct {
-	Username string `json:"username"`
-	Message  string `json:"message"`
-}
+var broadcast = make(chan models.Message)
 
 func WebsocketHandler(w http.ResponseWriter, r *http.Request) {
 	conn, err := upgrader.Upgrade(w, r, nil)
@@ -36,7 +33,7 @@ func WebsocketHandler(w http.ResponseWriter, r *http.Request) {
 	clients[conn] = true
 
 	for {
-		var msg Message
+		var msg models.Message
 		err := conn.ReadJSON(&msg)
 		if err != nil {
 			log.Printf("Error reading JSON: %v", err)

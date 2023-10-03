@@ -4,12 +4,13 @@ import (
 	"log"
 
 	postgresdb "websocket_1/server/database"
+	"websocket_1/server/security"
 )
 
 func RegisterUser(username, password string) error {
 	db := postgresdb.GetInstanceDB().DB
 
-	hashedFinalPassword, finalSalt, err := HashAndSaltPassword(password)
+	hashedFinalPassword, finalSalt, err := security.HashAndSaltPassword(password)
 	if err != nil {
 		log.Fatal(err)
 	}
