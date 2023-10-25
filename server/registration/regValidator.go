@@ -23,13 +23,11 @@ func RegValidator(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	// Perform registration
 	if err := RegisterUser(username, password); err != nil {
 		http.Error(w, "Registration failed", http.StatusInternalServerError)
 		return
 	}
 
-	// Registration successful // TODO: PUT THIS INTO REGISTRATION.GO
 	w.WriteHeader(http.StatusCreated)
 	w.Write([]byte("Registration successful"))
 }

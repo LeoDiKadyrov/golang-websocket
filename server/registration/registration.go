@@ -21,24 +21,3 @@ func RegisterUser(username, password string) error {
 	}
 	return nil
 }
-
-/* TODO:
-x Send registration successfull message to frontend and show it from javascript to users
-x Redirect to chat main page (right now it's "/")
-- Authentication handler func
-- Forgot password handler
-- Logout handler func
-- Protect Websocket Endpoint (check user's JWT before allowing connection)
-- Session management through gorilla/sessions
-- Create models folder with Message model and User model ???
-- Rate Limiting and Brute Force Protection
-- Secure Password Recovery
-
-x Handle input values on js
-x Validate them
-x Send POST request to registration.go
-x Put DB connection in another file for singleton
-x User Struct
-x Database Setup (ORM or GORM) for username + password
-x Registration handler func
-*/
