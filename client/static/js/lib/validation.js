@@ -16,7 +16,7 @@ function isValidUsername(username) {
     if (username.length <= 4) {
         return false;
     }
-    const letters = /^[a-zA-Z]+$/;
+    const letters = /^[a-zA-Z0-9!@#$%^&*()_+{}\[\]:;<>,.?~=-]+$/;
     return letters.test(username);
 }
 

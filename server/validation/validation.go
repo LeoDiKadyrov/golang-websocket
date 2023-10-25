@@ -32,7 +32,7 @@ func IsValidPassword(password string) bool {
 }
 
 func IsValidUsername(username string) bool {
-	var englishLettersPattern = regexp.MustCompile("^[a-zA-Z]+$")
+	var englishLettersPattern = regexp.MustCompile("^[a-zA-Z0-9!@#$%^&*()_+{}\\[\\]:;<>,.?~=-]+$")
 	var usernameLength = len(username)
 
 	if usernameLength >= 4 && usernameLength <= 40 && englishLettersPattern.MatchString(username) {
