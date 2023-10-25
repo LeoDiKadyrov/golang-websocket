@@ -1,17 +1,14 @@
 package authentication
 
 import (
-	"fmt"
-	"net/http"
 	"encoding/json"
+	"net/http"
 
 	"websocket_1/server/models"
 	"websocket_1/server/validation"
 )
 
 func AuthValidator(w http.ResponseWriter, r *http.Request) {
-	fmt.Println("I'm an auth validator")
-
 	var request models.User
 	if err := json.NewDecoder(r.Body).Decode(&request); err != nil {
 		http.Error(w, err.Error(), http.StatusBadRequest)

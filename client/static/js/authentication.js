@@ -1,4 +1,4 @@
-import { createRegAuthSubmitBtnEventListener } from "./lib/formHandler.js";
+import { inputValidation } from "./lib/validation.js"
 
 const usernameInput = document.getElementsByClassName("authentication__login")[0];
 const passwordInput = document.getElementsByClassName("authentication__password")[0];
@@ -6,7 +6,42 @@ const formSubmitButton = document.getElementsByClassName("authentication__submit
 const modal = document.getElementsByClassName("authentication__modal")[0]
 const span = document.getElementsByClassName("close")[0];
 
-createRegAuthSubmitBtnEventListener(formSubmitButton, usernameInput, passwordInput, modal, "authenticate");
+let userInfo = {
+  username: "",
+  password: ""
+}
+formSubmitButton.addEventListener("click", async (event) => {
+  event.preventDefault()
+  userInfo.username = usernameInput.value
+  userInfo.password = passwordInput.value
+
+  let dataValidated = inputValidation(userInfo.username, userInfo.password)
+
+  if (dataValidated) {
+      fetch("authenticate", {
+          method: "POST", 
+          headers: {
+              "Content-Type": "application/json",
+          },
+          body: JSON.stringify(userInfo),
+      })
+          .then((response) => {
+              if (!response.ok) {
+                  throw new Error("Authentication failed")
+              }
+              return response.text()
+          })
+          .then((message) => {
+              console.log(message);
+              modal.style.display = "block";
+          })
+          .catch((error) => {
+              console.error("Authentication error: ", error?.message)
+          })
+  }
+  usernameInput.value = ""
+  passwordInput.value = ""
+})
 
 // When the user clicks on <span> (x), close the modal
 span.onclick = function() {

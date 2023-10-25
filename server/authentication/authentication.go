@@ -3,31 +3,24 @@ package authentication
 import (
 	"database/sql"
 	"errors"
-	"fmt"
 	"log"
 
 	postgresdb "websocket_1/server/database"
 	"websocket_1/server/models"
-	"websocket_1/server/security"
+	"golang.org/x/crypto/bcrypt"
 )
 
 func AuthenticateUser(username, password string) error {
-	fmt.Println("authentication package")
 	var user models.User
-
 	db := postgresdb.GetInstanceDB().DB
-	hashedPassword, Salt, err := security.HashAndSaltPassword(password)
-	if err != nil {
-		log.Fatal(err)
-	}
 
-	stmt, err := db.Prepare("SELECT username, password_hash, salt FROM users WHERE username = '?';")
+	stmt, err := db.Prepare("SELECT username, password_hash FROM users WHERE username = $1;")
 	if err != nil {
 		log.Fatal(err)
 	}
 	defer stmt.Close()
 
-	err = stmt.QueryRow(username).Scan(&user.Username, &user.PasswordHash, &user.Salt)
+	err = stmt.QueryRow(username).Scan(&user.Username, &user.PasswordHash)
 	if err != nil {
 		if err == sql.ErrNoRows {
 			return errors.New("invalid username")
@@ -35,11 +28,10 @@ func AuthenticateUser(username, password string) error {
 		return err
 	}
 
-	if hashedPassword != user.PasswordHash || string(Salt) != string(user.Salt) {
-		return errors.New("invalid password")
+	err = bcrypt.CompareHashAndPassword([]byte(user.PasswordHash), []byte(password))
+	if err != nil {
+		log.Fatal(err)
 	}
-
-	fmt.Println("authentication successful")
 
 	return nil
 

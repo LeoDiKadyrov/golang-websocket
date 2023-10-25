@@ -10,12 +10,12 @@ import (
 func RegisterUser(username, password string) error {
 	db := postgresdb.GetInstanceDB().DB
 
-	hashedFinalPassword, finalSalt, err := security.HashAndSaltPassword(password)
+	hashedFinalPassword, err := security.HashAndSaltPassword(password)
 	if err != nil {
 		log.Fatal(err)
 	}
 
-	_, err = db.Exec("INSERT INTO users (username, password_hash, salt) VALUES ($1, $2, $3)", username, hashedFinalPassword, finalSalt)
+	_, err = db.Exec("INSERT INTO users (username, password_hash) VALUES ($1, $2)", username, hashedFinalPassword)
 	if err != nil {
 		log.Fatal(err)
 	}
