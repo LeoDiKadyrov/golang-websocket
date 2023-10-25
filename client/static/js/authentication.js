@@ -3,8 +3,10 @@ import { inputValidation } from "./lib/validation.js"
 const usernameInput = document.getElementsByClassName("authentication__login")[0];
 const passwordInput = document.getElementsByClassName("authentication__password")[0];
 const formSubmitButton = document.getElementsByClassName("authentication__submit")[0];
-const modal = document.getElementsByClassName("authentication__modal")[0]
-const span = document.getElementsByClassName("close")[0];
+const successModal = document.getElementById("successModal")
+const successSpan = document.getElementById("closeSuccessModal");
+const failureModal = document.getElementById("failureModal")
+const failureSpan = document.getElementById("closeFailureModal");
 
 let userInfo = {
   username: "",
@@ -27,13 +29,14 @@ formSubmitButton.addEventListener("click", async (event) => {
       })
           .then((response) => {
               if (!response.ok) {
-                  throw new Error("Authentication failed")
+                failureModal.style.display = "block";
+                throw new Error("Authentication failed")
               }
               return response.text()
           })
           .then((message) => {
               console.log(message);
-              modal.style.display = "block";
+              successModal.style.display = "block";
           })
           .catch((error) => {
               console.error("Authentication error: ", error?.message)
@@ -44,15 +47,21 @@ formSubmitButton.addEventListener("click", async (event) => {
 })
 
 // When the user clicks on <span> (x), close the modal
-span.onclick = function() {
-  modal.style.display = "none";
-  window.location.replace("/");
+successSpan.onclick = function() {
+    successModal.style.display = "none";
+    window.location.replace("/");
+}
+
+failureSpan.onclick = function() {
+    failureModal.style.display = "none";
 }
 
 // When the user clicks anywhere outside of the modal, close it
 window.onclick = function(event) {
-    if (event.target == modal) {
-        modal.style.display = "none";
+    if (event.target == successModal) {
+        successModal.style.display = "none";
         window.location.replace("/");
+    } else if (event.target == failureModal) {
+        failureModal.style.display = "none";
     }
 }

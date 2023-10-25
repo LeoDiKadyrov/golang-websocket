@@ -2,13 +2,13 @@ package registration
 
 import (
 	"encoding/json"
-	"net/http"
 	"log"
+	"net/http"
 
 	postgresdb "websocket_1/server/database"
 	"websocket_1/server/models"
-	"websocket_1/server/validation"
 	"websocket_1/server/security"
+	"websocket_1/server/validation"
 )
 
 func RegHandler(w http.ResponseWriter, r *http.Request) {
@@ -16,7 +16,7 @@ func RegHandler(w http.ResponseWriter, r *http.Request) {
 	var request models.User
 	if err := json.NewDecoder(r.Body).Decode(&request); err != nil {
 		http.Error(w, err.Error(), http.StatusBadRequest)
-		return 
+		return
 	}
 
 	username := request.Username
@@ -24,7 +24,7 @@ func RegHandler(w http.ResponseWriter, r *http.Request) {
 
 	if !validation.IsValidPassword(password) || !validation.IsValidUsername(username) {
 		http.Error(w, "Invalid registration input", http.StatusBadRequest)
-		return 
+		return
 	}
 
 	var exists bool
@@ -36,7 +36,7 @@ func RegHandler(w http.ResponseWriter, r *http.Request) {
 
 	if exists {
 		http.Error(w, "Username already exists", http.StatusConflict)
-		return 
+		return
 	} // If username already exists - show it on frontend side
 
 	hashedFinalPassword, err := security.HashAndSaltPassword(password)

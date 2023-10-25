@@ -58,7 +58,7 @@ func authenticateUser(username, password string) error {
 	err = bcrypt.CompareHashAndPassword([]byte(user.PasswordHash), []byte(password))
 	if err != nil {
 		log.Fatal(err)
-	}
+	} // IF ERROR SHOW ON FRONTEND
 
 	return nil
 }

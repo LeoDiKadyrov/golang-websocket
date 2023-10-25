@@ -24,11 +24,18 @@
             <p class="registration__auth"><a href="/authentication">Sign in</a></p>
         </div>
  
-        <div class="registration__modal">
+        <div id="successModal" class="registration__modal">
             <div class="modal__content">
-                <span class="close">&times;</span>
+                <span id="closeSuccessModal" class="close">&times;</span>
                 <p>Registration Successful</p>
                 <i class="fa-solid fa-check fa-2xl" style="color: #0ce910;"></i>
+            </div>
+        </div>
+
+        <div id="failureModal" class="registration__modal">
+            <div class="modal__content">
+                <span id="closeFailureModal" class="close">&times;</span>
+                <p>Registration Failed</p>
             </div>
         </div>
     </div>
