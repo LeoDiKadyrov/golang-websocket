@@ -31,6 +31,9 @@ func main() {
 	http.HandleFunc("/recovery", func(w http.ResponseWriter, r *http.Request) {
 		http.ServeFile(w, r, "client/recoverPassword.html")
 	})
+	http.HandleFunc("/newpassword", func(w http.ResponseWriter, r *http.Request) {
+		http.ServeFile(w, r, "client/newPassword.html")
+	})
 
 	go socket.HandleMessages()
 

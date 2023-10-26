@@ -3,14 +3,16 @@ package authentication
 import (
 	"database/sql"
 	"encoding/json"
-	"net/http"
 	"errors"
 	"log"
+	"net/http"
 
+	postgresdb "websocket_1/server/database"
+	customError "websocket_1/server/error"
 	"websocket_1/server/models"
 	"websocket_1/server/validation"
+
 	"golang.org/x/crypto/bcrypt"
-	postgresdb "websocket_1/server/database"
 )
 
 func AuthHandler(w http.ResponseWriter, r *http.Request) {
@@ -29,7 +31,11 @@ func AuthHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	if err := authenticateUser(username, password); err != nil {
-		http.Error(w, "Authentication failed", http.StatusInternalServerError)
+		if err.Error() == "password is incorrect" {
+			http.Error(w, err.Error(), http.StatusUnauthorized)
+		} else {
+			customError.SendCustomHttpError(w, http.StatusInternalServerError, "Authentication failed")
+		}
 		return
 	}
 
@@ -57,8 +63,8 @@ func authenticateUser(username, password string) error {
 
 	err = bcrypt.CompareHashAndPassword([]byte(user.PasswordHash), []byte(password))
 	if err != nil {
-		log.Fatal(err)
-	} // IF ERROR SHOW ON FRONTEND
+		return errors.New("password is incorrect")
+	}
 
 	return nil
 }

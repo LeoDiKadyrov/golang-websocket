@@ -12,7 +12,7 @@ export function inputValidation(username, password) {
     return true; 
 }
 
-function isValidUsername(username) {
+export function isValidUsername(username) {
     if (username.length <= 4) {
         return false;
     }

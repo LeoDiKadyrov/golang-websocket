@@ -37,7 +37,7 @@ func RegHandler(w http.ResponseWriter, r *http.Request) {
 	if exists {
 		http.Error(w, "Username already exists", http.StatusConflict)
 		return
-	} // If username already exists - show it on frontend side
+	} 
 
 	hashedFinalPassword, err := security.HashAndSaltPassword(password)
 	if err != nil {

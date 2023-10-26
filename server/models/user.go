@@ -9,3 +9,5 @@ type Message struct {
 	Username string `json:"username"`
 	Message  string `json:"message"`
 }
+
+// TODO: methods to select users, insert into, etc (DEFINE AS FUNCTIONS)
