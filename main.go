@@ -9,6 +9,7 @@ import (
 	postgresdb "websocket_1/server/database"
 	"websocket_1/server/registration"
 	"websocket_1/server/socket-server"
+	"websocket_1/server/recovery"
 )
 
 func main() {
@@ -22,6 +23,7 @@ func main() {
 	http.HandleFunc("/ws", socket.WebsocketHandler)
 	http.HandleFunc("/register", registration.RegHandler)
 	http.HandleFunc("/authenticate", authentication.AuthHandler)
+	http.HandleFunc("/recover", recovery.RecoverPassword)
 	http.HandleFunc("/registration", func(w http.ResponseWriter, r *http.Request) {
 		http.ServeFile(w, r, "client/registration.html")
 	})

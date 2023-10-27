@@ -1,15 +1,15 @@
-package recoverpassword
+package recovery
 
 import (
 	"encoding/json"
 	"log"
 	"net/http"
+	postgresdb "websocket_1/server/database"
 	"websocket_1/server/models"
 	"websocket_1/server/validation"
-	postgresdb "websocket_1/server/database"
 )
 
-func recoverPassword(w http.ResponseWriter, r *http.Request) {
+func RecoverPassword(w http.ResponseWriter, r *http.Request) {
 	db := postgresdb.GetInstanceDB().DB
 	var request models.User
 	if err := json.NewDecoder(r.Body).Decode(&request); err != nil {
@@ -25,22 +25,24 @@ func recoverPassword(w http.ResponseWriter, r *http.Request) {
 	}
 
 	var exists bool
-	err := db.QueryRow("SELECT EXISTS(SELECT 1 FROM users WHERE username = $1)", username).Scan(&exists)
+	err := db.QueryRow("SELECT EXISTS(SELECT 1 FROM users WHERE username = $1)", username).Scan(&exists) // put into model
 	if err != nil {
 		log.Println("Error checking existence:", err)
 		return
 	}
 
 	if exists {
-		err := db.QueryRow("UPDATE TABLE users SET password_hash = '' WHERE username = $1", username)
+		_, err := db.Exec("UPDATE users SET password_hash = '' WHERE username = $1", username) // put into model
 		if err != nil {
 			log.Println("Error updating password:", err)
 			return
 		}
 
-		// TODO:
-		w.WriteHeader(http.StatusCreated)
+		w.WriteHeader(http.StatusOK)
 		w.Write([]byte("Password is reset"))
+
+	} else {
+		http.Error(w, "Username doesn't exist", http.StatusBadRequest)
+		return
 	}
-	
 }

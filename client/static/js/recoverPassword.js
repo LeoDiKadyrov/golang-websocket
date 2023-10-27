@@ -2,6 +2,8 @@ import { isValidUsername } from "./lib/validation.js"
 
 const usernameInput = document.getElementsByClassName("recover__login")[0]
 const formSubmitButton = document.getElementsByClassName("recover__submit")[0]
+const successModal = document.getElementById("successModal")
+const successSpan = document.getElementById("closeSuccessModal");
 const failureModal = document.getElementById("failureModal")
 const failureSpan = document.getElementById("closeFailureModal")
 
@@ -16,7 +18,7 @@ formSubmitButton.addEventListener("click", async (event) => {
   let dataValidated = isValidUsername(userInfo.username)
 
   if (dataValidated) {
-      fetch("recovery", {
+      fetch("recover", {
           method: "POST", 
           headers: {
               "Content-Type": "application/json",
@@ -32,14 +34,19 @@ formSubmitButton.addEventListener("click", async (event) => {
           })
           .then((message) => {
               console.log(message);
+              successModal.style.display = "block";
           })
           .catch((error) => {
               console.error("Password recovery error: ", error?.message)
           })
   }
   usernameInput.value = ""
-  window.location.replace("/newpassword")
 })
+
+successSpan.onclick = function() {
+    successModal.style.display = "none";
+    window.location.replace("/newpassword")
+}
 
 failureSpan.onclick = function() {
     failureModal.style.display = "none";
@@ -47,7 +54,10 @@ failureSpan.onclick = function() {
 
 // When the user clicks anywhere outside of the modal, close it
 window.onclick = function(event) {
-    if (event.target == failureModal) {
+    if (event.target == successModal) {
+        successModal.style.display = "none";
+        window.location.replace("/");
+    } else if (event.target == failureModal) {
         failureModal.style.display = "none";
     }
 }
